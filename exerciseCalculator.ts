@@ -16,7 +16,7 @@ number of exercise hours for each day in the training period.
 
 import { parseNumericalArguments } from "./helper";
 
-interface exerciseObject {
+export interface exerciseObject {
     periodLength: number;
     trainingDays: number;
     success: boolean;
@@ -27,22 +27,22 @@ interface exerciseObject {
 }
    
 
-const calculateExercises = (dailyExerciseHours: number[], target: number): exerciseObject => {
-    const periodLength: number = dailyExerciseHours.length
-    const trainingDays: number = dailyExerciseHours.filter((x) => x>0).length
-    const average: number = dailyExerciseHours.reduce((acc, x) => acc + x)/periodLength
-    const success: boolean = average>=target
-    let rating: number
-    let ratingDescription: string
+export const calculateExercises = (dailyExerciseHours: number[], target: number): exerciseObject => {
+    const periodLength: number = dailyExerciseHours.length;
+    const trainingDays: number = dailyExerciseHours.filter((x) => x>0).length;
+    const average: number = dailyExerciseHours.reduce((acc, x) => acc + x)/periodLength;
+    const success: boolean = average>=target;
+    let rating: number;
+    let ratingDescription: string;
     if (average/target >= 1) {
-       rating  = 3
-       ratingDescription = 'Excellent!!!'
+       rating  = 3;
+       ratingDescription = 'Excellent!!!';
     } else if (average/target>=0.5){
-         rating  = 2
-         ratingDescription =  'not too bad but could be better'
+         rating  = 2;
+         ratingDescription =  'not too bad but could be better';
     } else {
-         rating = 1
-         ratingDescription = "Diabolical :("
+         rating = 1;
+         ratingDescription = "Diabolical :(";
     }
     const exerciseObj: exerciseObject = {
         periodLength,
@@ -52,16 +52,19 @@ const calculateExercises = (dailyExerciseHours: number[], target: number): exerc
         ratingDescription,
         target,
         average
-    }
+    };
 
-    return exerciseObj
+    return exerciseObj;
 
 
+};
+
+if (require.main === module) {
+    // only run this code if run directly, not if imported
+const numericalArgs: string[] = process.argv.slice(2);
+const parsedArgs: number[] = parseNumericalArguments(numericalArgs, -1); //inf possible args
+const target: number = parsedArgs[0];
+const dailyExerciseHours: number[] = [];
+parsedArgs.slice(1).forEach((arg) => dailyExerciseHours.push(arg));
+console.log(calculateExercises(dailyExerciseHours, target));
 }
-
-const numericalArgs: string[] = process.argv.slice(2)
-const parsedArgs: number[] = parseNumericalArguments(numericalArgs, -1) //inf possible args
-const target: number = parsedArgs[0]
-let dailyExerciseHours: number[] = [];
-parsedArgs.slice(1).forEach((arg) => dailyExerciseHours.push(arg))
-console.log(calculateExercises(dailyExerciseHours, target))

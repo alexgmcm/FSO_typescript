@@ -5,16 +5,16 @@ export const parseNumericalArguments = (args: string[], expectedNArgs: number): 
     if (args.length > expectedNArgs) throw new Error('Too many arguments');
     }
 
-    let returnArgs: number[] = [];
+    const returnArgs: number[] = [];
     args.forEach((arg) => {
         if (!isNaN(Number(arg))){
-            returnArgs.push(Number(arg))
+            returnArgs.push(Number(arg));
         } else {
             throw new Error('Provided values were not numbers!');
         }
-    })
+    });
     
-    return returnArgs
-  }
+    return returnArgs;
+  };
 
   
