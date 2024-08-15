@@ -3,7 +3,7 @@
  returns a message that suits the results*/
 import { parseNumericalArguments } from "./helper"
 
- const calculateBmi = (height: number, weight: number) : string => {
+ export const calculateBmi = (height: number, weight: number) : string => {
     const heightInMetres: number = height/100
     const bmi: number = weight/(heightInMetres)**2
     if (bmi>=30) {
@@ -21,6 +21,9 @@ import { parseNumericalArguments } from "./helper"
  //const height: number =  N
 
  //console.log(calculateBmi(180,74))
+ if (require.main === module) {
+// only run this code if run directly, not if imported
  const numericalArgs = process.argv.slice(2)
  const parsedArgs = parseNumericalArguments(numericalArgs, 2)
  console.log(calculateBmi(parsedArgs[0], parsedArgs[1]))
+ }
